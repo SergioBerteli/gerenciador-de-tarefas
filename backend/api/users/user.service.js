@@ -16,6 +16,18 @@ module.exports = {
                 return callback(null, results);
             }
         );
+    },
+    getAll: callback => {
+        pool.query(
+            `SELECT * FROM Usuario`,
+            [],
+            (error, results, fields) => {
+                if (error) {
+                    return callback(error);
+                }
+                return callback(null, results);
+            }
+        );
     }
 };
 

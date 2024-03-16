@@ -1,4 +1,4 @@
-const { create } = require("./user.service.js");
+const { create, getAll} = require("./user.service.js");
 
 const { genSaltSync, hashSync } = require("bcrypt");
 
@@ -21,5 +21,19 @@ module.exports = {
                 message: results
             });
         });
+    },
+    getUsers: (req, res) => {
+        getAll((err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            return res.status(200).json({
+                success: 1,
+                data: results
+            });
+        });
     }
+
+    
 };
