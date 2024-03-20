@@ -28,7 +28,22 @@ module.exports = {
                 return callback(null, results);
             }
         );
+    },
+    getByID: (id, callback) => {
+        pool.query(
+            `SELECT * FROM Usuario WHERE UsuarioID = ?`,
+            [
+                id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callback(error);
+                }
+                return callback(null, results[0]);
+            }
+        );
     }
+
 };
 
 
