@@ -42,8 +42,40 @@ module.exports = {
                 return callback(null, results[0]);
             }
         );
+    },
+    updateByID: (data, callback) => {
+        pool.query(`
+            UPDATE Usuario
+            SET Username = ?, Senha = ?
+            WHERE UsuarioID = ?;`,
+            [
+                data.Username,
+                data.Senha,
+                data.UsuarioID
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callback(error);
+                }
+                return callback(null, results[0]);
+            }
+        );
+    },
+    deleteByID: (data, callback) => {
+        pool.query(`
+            DELETE FROM Usuario
+            WHERE UsuarioID = ?;`,
+            [
+                data.UsuarioID
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callback(erro);
+                }
+                return callback(null, results[0]);
+            }
+        );
     }
-
 };
 
 

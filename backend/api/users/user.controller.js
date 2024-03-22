@@ -1,4 +1,4 @@
-const { create, getAll, getByID} = require("./user.service.js");
+const { create, getAll, getByID, updateByID, deleteByID} = require("./user.service.js");
 
 const { genSaltSync, hashSync } = require("bcrypt");
 
@@ -27,7 +27,7 @@ module.exports = {
                 console.log(err);
                 return;
             }
-            return res.status(200).json({
+            return res.json({
                 success: 1,
                 data: results
             });
@@ -40,10 +40,45 @@ module.exports = {
                 console.log(err);
                 return;
             }
-            return res.status(200).json({
+            if (!result) {
+                return res.json({
+                    success: 0,
+                    message: "Usuario não encontrado"
+                });
+            }
+            return res.json({
                 success: 1,
                 data: result
             });
+        });
+    },
+    updateUserByID: (req, res) => {
+        const body = req.body;
+        const salt = genSaltSync(10);
+        body.Senha = hashSync(body.Senha, salt);
+        updateByID(body, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            return res.json ({
+                success: 1,
+                data: "Usuário atualizado com sucesso" 
+            });
+        });
+
+    },
+    deleteUserByID: (req, res) => {
+        const body = req.body
+        deleteByID(body, (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            return res.json({
+                succes: 1,
+                message: "Usuario deletado com sucesso",
+            })
         });
     }
 
